@@ -1,0 +1,21 @@
+﻿# Binaries and build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+dist/
+
+# Operator binary
+manager
+
+# Go workspace & cache
+vendor/
+.cache/
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
