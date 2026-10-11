@@ -37,7 +37,7 @@ The controller implements a staged state machine:
 
 ### 2. Cluster & Mock BMC Setup
 ```powershell```
-  # Create 3-node kind cluster
+  # Create 3-node "kind" cluster
     kind create cluster --name kubebuild-lab --config kind-config.yaml
 
   # Deploy mock Redfish BMC
@@ -45,6 +45,22 @@ The controller implements a staged state machine:
     kubectl port-forward svc/redfish-service 8000:8000
 
 ### 2.1 Verify Topology Health & BMC Reachability
+  # Verify 3-node cluster topology
       kubectl get nodes -o wide
 
+  # Verify Redfish BMC Service Endpoint
+      curl.exe -i -X POST http://localhost:8000/redfish/v1/Systems/worker-01/Actions/ComputerSystem.Reset
+
+### 3. Deploy Custom Resource Definition (CRD)
+    kubectl apply -f config/crd/bases/build.autobuild.io_reimagerequests.yaml
+
+### 4. Deploy Sample Application
+      kubectl apply -f config/workloads/sample-workload.yaml
+      kubectl get pods -o wide -l app=web-service
+
+### 5. Run the Operator
+      go run main.go
+
+### 6. Trigger Node Lifecycle
+      kubectl apply -f config/samples/build_v1alpha1_reimagerequest_worker1.yaml
   
