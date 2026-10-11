@@ -37,18 +37,18 @@ The controller implements a staged state machine:
 
 ### 2. Cluster & Mock BMC Setup
 ```powershell```
-  # Create 3-node "kind" cluster
+  * Create 3-node "kind" cluster
     kind create cluster --name kubebuild-lab --config kind-config.yaml
 
-  # Deploy mock Redfish BMC
+  * Deploy mock Redfish BMC
     kubectl apply -f [https://raw.githubusercontent.com/DMTF/Redfish-Mockup-Server/master/deploy/k8s/redfish-mockup.yaml](https://raw.githubusercontent.com/DMTF/Redfish-Mockup-Server/master/deploy/k8s/redfish-mockup.yaml)
     kubectl port-forward svc/redfish-service 8000:8000
 
 ### 2.1 Verify Topology Health & BMC Reachability
-  # Verify 3-node cluster topology
+    * Verify 3-node cluster topology
       kubectl get nodes -o wide
 
-  # Verify Redfish BMC Service Endpoint
+    * Verify Redfish BMC Service Endpoint
       curl.exe -i -X POST http://localhost:8000/redfish/v1/Systems/worker-01/Actions/ComputerSystem.Reset
 
 ### 3. Deploy Custom Resource Definition (CRD)
@@ -64,3 +64,11 @@ The controller implements a staged state machine:
 ### 6. Trigger Node Lifecycle
       kubectl apply -f config/samples/build_v1alpha1_reimagerequest_worker1.yaml
   
+---
+
+## Post-Mortems & Operational Learnings
+
+Documented incident post-mortems and debugging logs encountered during development:
+
+* [Incident 01: Redfish BMC TCP Handshake Failure (`connectex`)](docs/learning-points/01-redfish-bmc-connection-refusal.md)
+* [Incident 02: Stale Controller Binary & Pod Eviction Bypass](docs/learning-points/02-stale-binary-and-eviction-bypass.md)
