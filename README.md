@@ -36,13 +36,13 @@ The controller implements a staged state machine:
 * Go (version 1.22+)
 
 ### 2. Cluster & Mock BMC Setup
-```powershell```
-  * Create 3-node "kind" cluster
-    kind create cluster --name kubebuild-lab --config kind-config.yaml
 
-  * Deploy mock Redfish BMC
-    kubectl apply -f [https://raw.githubusercontent.com/DMTF/Redfish-Mockup-Server/master/deploy/k8s/redfish-mockup.yaml](https://raw.githubusercontent.com/DMTF/Redfish-Mockup-Server/master/deploy/k8s/redfish-mockup.yaml)
-    kubectl port-forward svc/redfish-service 8000:8000
+    * Create 3-node "kind" cluster
+      kind create cluster --name kubebuild-lab --config kind-config.yaml
+
+    * Deploy mock Redfish BMC
+      kubectl apply -f [https://raw.githubusercontent.com/DMTF/Redfish-Mockup-Server/master/deploy/k8s/redfish-mockup.yaml](https://raw.githubusercontent.com/DMTF/Redfish-Mockup-Server/master/deploy/k8s/redfish-mockup.yaml)
+      kubectl port-forward svc/redfish-service 8000:8000
 
 ### 2.1 Verify Topology Health & BMC Reachability
     * Verify 3-node cluster topology
