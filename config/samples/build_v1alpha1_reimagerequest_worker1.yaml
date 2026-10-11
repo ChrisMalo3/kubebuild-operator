@@ -1,0 +1,11 @@
+﻿apiVersion: build.autobuild.io/v1alpha1
+kind: ReimageRequest
+metadata:
+  name: worker-01-rebuild
+  namespace: default
+spec:
+  targetType: "Node"
+  targetRef:
+    name: "kubebuild-lab-worker"
+  profileRef: "ubuntu-jammy-hpc-v2"
+  rolloutMode: "Offline"
